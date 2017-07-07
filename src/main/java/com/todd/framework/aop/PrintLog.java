@@ -5,10 +5,10 @@ import java.util.Date;
 public class PrintLog {
 	
 	public void afterPrintLog(){
-		System.out.println(new Date()+"日志：执行之后");
+		System.out.println(new Date()+"日志：执行之后方法");
 	}
 	public void beforePrintLog(){
-		System.out.println(new Date()+"日志：执行之前");
+		System.out.println(new Date()+"日志：执行之前方法");
 	}
 	
 }
