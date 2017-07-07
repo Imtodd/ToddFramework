@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	<!-- 加载properties文件 -->
+	<context:property-placeholder location="classpath:bean.properties" />
+	<!-- ***************************quartz定时器配置*************************** -->
+	<!-- 实例化定时器 <bean id="testMethodQuartz" class="com.zp.zentao.quartz.StartQuartz" 
+		/> -->
+	<!-- 配置MethodInvokingJobDetailFactoryBean <bean id="testTaskMethod" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"> 
+		<property name="targetObject" ref="testMethodQuartz" /> <property name="targetMethod" 
+		value="startpatrol" /> <property name="concurrent" value="false" /> </bean> -->
+	<!-- 配置定时表达式 <bean id="testTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"> 
+		<property name="jobDetail" ref="testTaskMethod" /> -->
+	<!-- 每天下午5点半 <property name="cronExpression" value="${checktime}" /> </bean> -->
+	<!-- 配置调度工厂 <bean id="testSchedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean"> 
+		<property name="triggers"> <list> <ref bean="testTaskTrigger" /> </list> 
+		</property> </bean> -->
+	<!-- ***************************quartz定时器配置完成*************************** -->
+
+</beans>
