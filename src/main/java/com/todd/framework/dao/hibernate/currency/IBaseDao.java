@@ -1,3 +1,4 @@
+package com.todd.framework.dao.hibernate.currency;
 //package com.todd.framework.dao.hibernate.currency;
 //
 //import java.io.Serializable;
