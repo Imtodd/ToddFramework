@@ -20,6 +20,8 @@
 	<import resource="spring_quartz.xml" />
 	<!-- 加载aop配置文件 -->
 	<import resource="spring_aop.xml"/>
+	<!-- 加载ehcache配置文件 -->
+	<import resource="spring_cache.xml"/>
 	<!-- 加载注解 -->
 	<context:annotation-config />
 	<!-- 组件扫描 -->

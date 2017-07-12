@@ -12,6 +12,7 @@
 		<config>src/main/resources/spring_quartz.xml</config>
 		<config>src/main/resources/spring.xml</config>
 		<config>src/main/resources/spring_aop.xml</config>
+		<config>src/main/resources/spring_cache.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
