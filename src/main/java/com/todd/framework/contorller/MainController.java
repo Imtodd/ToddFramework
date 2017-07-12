@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpRequest;
@@ -29,12 +30,6 @@ public class MainController {
 
 	@Autowired
 	private IUserService userservice;
-
-//	@ResponseBody
-//	@RequestMapping(value = "getAll", method = RequestMethod.GET)
-//	public Collection<User> getAllUser() {
-//		return userservice.getAll();
-//	}
 
 	@RequestMapping(value = "upload", method = RequestMethod.POST)
 	public String uploadPIC(@RequestParam(name = "file", required = false) MultipartFile file, Map<String, Object> map,
@@ -59,10 +54,22 @@ public class MainController {
 		return "showpic";
 	}
 
-	@ResponseBody
-	@RequestMapping(value = "getuser", method = RequestMethod.GET)
-	public User getUser() {
-		User user = userservice.getUser();
-		return user;
+	@RequestMapping(value="regist",method=RequestMethod.POST)
+	public String regist(User user,Map<String,Object> map){
+		User temp_user = userservice.getUserWithName(user.getUserName());
+		if(temp_user!=null){
+			userservice.addUser(user);
+			map.put("code", 101);
+			map.put("msg", "注册成功");
+		}else{
+			map.put("code", 102);
+			map.put("msg","用户名已经存在，请重新注册");
+		}
+		return "main";
+	}
+	
+	public String login(User user){
+		//SecurityUtils.setSecurityManager(securityManager);
+		return "main";
 	}
 }

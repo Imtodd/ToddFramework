@@ -13,7 +13,7 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 	<!-- ***************************spring环境配置*************************** -->
 	<!-- 加载hibernate配置文件 -->
-	<!-- <import resource="spring_hibernate.xml" />-->
+	<import resource="spring_hibernate.xml" />
 	<!-- 加载mybatis配置文件 -->
 	<import resource="spring_mybatis.xml"/> 
 	<!-- 加载quartz配置文件 -->

@@ -1,8 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.todd.framework.dao.mybatis.UserDaoForMyBatis">
-	<select id="getUser" parameterType="int" resultType="com.todd.framework.po.User">
+	<select id="getUserWithID" parameterType="int"
+		resultType="com.todd.framework.po.User">
 		select *
 		from user where id=#{id};
 	</select>
+	<select id="getUserWithName" parameterType="String"
+		resultType="com.todd.framework.po.User">
+		select *
+		from user where name =#{name};
+	</select>
+	<select id="getUsers" resultType="java.util.List">
+		select * from user;
+	</select>
+	<update id="updateUser" parameterType="com.todd.framework.po.User">
+		update user set password =
+		#{user.password} where name = #{user.name};
+	</update>
+	<insert id="addUser" parameterType="com.todd.framework.po.User">
+		insert into
+		user(id,name,password) values
+		(#{user.id},#{user.name},#{user.password});
+	</insert>
+	<delete id="deletaUser" parameterType="com.todd.framework.po.User">
+		delete from user where id = #{user.id};
+	</delete>
 </mapper>

@@ -30,7 +30,7 @@
 		<!-- 扫描实体类包 -->
 		<property name="packagesToScan">
 			<list>
-				<value>com.todd.framework</value>
+				<value>com.todd.framework.po</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
