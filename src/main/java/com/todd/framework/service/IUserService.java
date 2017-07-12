@@ -10,7 +10,7 @@ public interface IUserService {
 	
 	public User getUserWithName(String name);
 	
-	public User getUserWithID(Integer id);
+	public User getUserWithID(int id);
 	
 	public void updateUser(User user);
 	
