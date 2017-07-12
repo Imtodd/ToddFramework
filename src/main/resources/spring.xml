@@ -15,7 +15,7 @@
 	<!-- 加载hibernate配置文件 -->
 	<import resource="spring_hibernate.xml" />
 	<!-- 加载mybatis配置文件 -->
-	<import resource="spring_mybatis.xml"/> 
+	<!--  <import resource="spring_mybatis.xml"/> -->
 	<!-- 加载quartz配置文件 -->
 	<import resource="spring_quartz.xml" />
 	<!-- 加载aop配置文件 -->
