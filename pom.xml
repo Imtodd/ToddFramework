@@ -23,6 +23,13 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<!--spring单元测试依赖 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
 		<!-- spring框架(spring与springmvc部分) -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -67,9 +74,9 @@
 		</dependency>
 		<!-- ehcache缓存框架 -->
 		<dependency>
-			<groupId>org.ehcache</groupId>
+			<groupId>net.sf.ehcache</groupId>
 			<artifactId>ehcache</artifactId>
-			<version>3.3.1</version>
+			<version>2.10.4</version>
 		</dependency>
 		<!-- jstl 标签库 -->
 		<dependency>

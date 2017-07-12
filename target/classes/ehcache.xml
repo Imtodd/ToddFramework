@@ -1,23 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>  
-<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">  
-     
-    <diskStore path="java.io.tmpdir/ehcache"/>  
-      
-    <!-- 默认缓存 -->  
-    <defaultCache  
-           maxElementsInMemory="1000"  
-           eternal="false"  
-           timeToIdleSeconds="120"  
-           timeToLiveSeconds="120"  
-           overflowToDisk="false"/>  
-             
-    <!-- 菜单缓存 -->      
-    <cache name="menuCache"   
-           maxElementsInMemory="1000"   
-           eternal="false"  
-           timeToIdleSeconds="120"  
-           timeToLiveSeconds="120"  
-           overflowToDisk="false"   
-           memoryStoreEvictionPolicy="LRU"/>  
-      
-</ehcache>  
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache>
+    <!-- 指定一个文件目录，当EhCache把数据写到硬盘上时，将把数据写到这个文件目录下 -->
+    <diskStore path="java.io.tmpdir"/>
+
+    <!-- 设定缓存的默认数据过期策略 -->
+    <defaultCache
+            maxElementsInMemory="10000" 
+            eternal="false" 
+            overflowToDisk="true"
+            timeToIdleSeconds="10"
+            timeToLiveSeconds="20"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"/>
+
+    <cache name="toddCache"
+        maxElementsInMemory="1000"
+        eternal="false"
+        overflowToDisk="true"
+        timeToIdleSeconds="10"
+        timeToLiveSeconds="20"/>
+
+</ehcache>
