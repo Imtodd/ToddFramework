@@ -5,7 +5,7 @@ import java.util.List;
 import com.todd.framework.po.Role;
 
 public interface IRoleService {
-	
+
 	public List<Role> getRoles();
 
 	public Role getRoleWithName(String name);
