@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +19,7 @@ public class User {
 	private int id;
 	private String userName;
 	private String password;
-	private String sale;
+	private String salt;
 	private boolean locked;
 	private List<Role> roles;
 
@@ -40,8 +41,8 @@ public class User {
 	}
 
 	@Column(columnDefinition = "varchar(255) COMMENT '盐'")
-	public String getSale() {
-		return sale;
+	public String getSalt() {
+		return salt;
 	}
 
 	@Column(columnDefinition = "boolean COMMENT '是否锁定'")
@@ -49,7 +50,7 @@ public class User {
 		return locked;
 	}
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinColumn(referencedColumnName="id",name="role_id")
 	public List<Role> getRoles() {
 		return roles;
@@ -67,8 +68,8 @@ public class User {
 		this.password = password;
 	}
 
-	public void setSale(String sale) {
-		this.sale = sale;
+	public void setSalt(String salt) {
+		this.salt = salt;
 	}
 
 	public void setLocked(boolean locked) {

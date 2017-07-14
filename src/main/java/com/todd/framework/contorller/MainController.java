@@ -6,11 +6,14 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpRequest;
@@ -23,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.todd.framework.po.User;
 import com.todd.framework.service.IUserService;
+import com.todd.framework.tools.PasswordHelper;
 
 @Controller
 @RequestMapping(value = "user")
@@ -31,45 +35,56 @@ public class MainController {
 	@Autowired
 	private IUserService userservice;
 
-	@RequestMapping(value = "upload", method = RequestMethod.POST)
-	public String uploadPIC(@RequestParam(name = "file", required = false) MultipartFile file, Map<String, Object> map,
-			HttpServletRequest request) {
-		String realPath = request.getSession().getServletContext().getRealPath("upload");
-		String contentType = file.getContentType();
-		int startnum = contentType.lastIndexOf("/");
-		int endnum = contentType.length();
-		String name = UUID.randomUUID() + contentType.substring(startnum, endnum).replace("/", ".");
-		File f = new File(realPath, name);
-		if (!f.exists()) {
-			f.mkdirs();
-		}
-		try {
-			file.transferTo(f);
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		map.put("filepath", request.getContextPath() + "/upload/" + name);
-		return "showpic";
+	@RequestMapping(value = "toLogin", method = RequestMethod.GET)
+	public String tologin(Map<String, Object> map) {
+		map.put("userModel", new User());
+		return "login";
 	}
 
-	@RequestMapping(value="regist",method=RequestMethod.POST)
-	public String regist(User user,Map<String,Object> map){
+	@RequestMapping(value = "toRegist", method = RequestMethod.GET)
+	public String toregist(Map<String, Object> map) {
+		map.put("userModel", new User());
+		return "regist";
+	}
+
+	@RequestMapping(value = "regist", method = RequestMethod.POST)
+	public String regist(Map<String, Object> map, User user) {
 		User temp_user = userservice.getUserWithName(user.getUserName());
-		if(temp_user!=null){
+		if (temp_user == null) {
 			userservice.addUser(user);
 			map.put("code", 101);
 			map.put("msg", "注册成功");
-		}else{
+			map.put("userModel", new User());
+			return "login";
+		} else {
 			map.put("code", 102);
-			map.put("msg","用户名已经存在，请重新注册");
+			map.put("msg", "用户名已经存在，请重新注册");
+			map.put("userModel", new User());
+			return "regist";
 		}
-		return "main";
+	}
+
+	@RequestMapping(value="getRole",method=RequestMethod.GET)
+	@ResponseBody
+	public Set<String> getRoleList(){
+		return userservice.findRoles("todd");
 	}
 	
-	public String login(User user){
-		//SecurityUtils.setSecurityManager(securityManager);
+	@RequestMapping(value="getpermission",method=RequestMethod.GET)
+	@ResponseBody
+	public Set<String> getpermission(){
+		return userservice.findPermissions("todd");
+	}
+	
+	@RequestMapping(value="Login",method=RequestMethod.POST)
+	public String login(User user) {
+		Subject subject = SecurityUtils.getSubject();
+		PasswordHelper.DecryptPassword("65f588c9d74a590b89976a425baf0f75", user);
+		UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), user.getPassword());
+		subject.login(token);
+		if(subject.isAuthenticated()){
+			System.out.println("用户登陆成功");
+		}
 		return "main";
 	}
 }
