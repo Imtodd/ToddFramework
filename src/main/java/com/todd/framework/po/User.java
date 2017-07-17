@@ -1,5 +1,6 @@
 package com.todd.framework.po;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -14,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "toddFramework_user")
-public class User {
+public class User implements Serializable {
 
 	private int id;
 	private String userName;

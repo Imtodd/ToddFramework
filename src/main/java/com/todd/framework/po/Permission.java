@@ -1,5 +1,6 @@
 package com.todd.framework.po;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -12,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "toddFramework_permission")
-public class Permission {
+public class Permission implements Serializable {
 	private int id;
 	private String permission;
 	private String description;
