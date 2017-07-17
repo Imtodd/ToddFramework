@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.todd.framework.activemq.MessageSender.MessageSender;
 import com.todd.framework.po.User;
 import com.todd.framework.service.IUserService;
 import com.todd.framework.tools.PasswordHelper;
@@ -35,6 +36,8 @@ public class MainController {
 
 	@Autowired
 	private IUserService userservice;
+	@Autowired
+	private MessageSender messagesender;
 
 	@RequestMapping(value = "toLogin", method = RequestMethod.GET)
 	public String tologin(Map<String, Object> map) {
@@ -79,16 +82,17 @@ public class MainController {
 
 	@RequestMapping(value = "Login", method = RequestMethod.POST)
 	public String login(User user) {
-		Subject subject = SecurityUtils.getSubject();//获得shiro的subject对象
-		User temp = userservice.getUserWithName(user.getUserName());//根据用户名获取用户
-		if (temp == null) {//判断是否找到账户
+		Subject subject = SecurityUtils.getSubject();// 获得shiro的subject对象
+		User temp = userservice.getUserWithName(user.getUserName());// 根据用户名获取用户
+		if (temp == null) {// 判断是否找到账户
 			throw new UnknownAccountException();
 		}
-		PasswordHelper.DecryptPassword(temp.getSalt(), user);//将盐信息添加到用户对象
-		UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), user.getPassword());//获取token
-		subject.login(token);//登陆操作
+		PasswordHelper.DecryptPassword(temp.getSalt(), user);// 将盐信息添加到用户对象
+		UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), user.getPassword());// 获取token
+		subject.login(token);// 登陆操作
 		if (subject.isAuthenticated()) {
 			System.out.println("用户登陆成功");
+			messagesender.userLogin(12, user.getUserName());
 		}
 		return "main";
 	}

@@ -14,6 +14,7 @@
 		<config>src/main/resources/spring_aop.xml</config>
 		<config>src/main/resources/spring_cache.xml</config>
 		<config>src/main/resources/spring_shiro.xml</config>
+		<config>src/main/resources/spring_activemq.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

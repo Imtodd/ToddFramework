@@ -24,6 +24,8 @@
 	<import resource="spring_cache.xml"/>
 	<!-- 加载shiro配置文件 -->
 	<import resource="spring_shiro.xml"/>
+	<!-- 加载activemq配置文件 -->
+	<import resource="spring_activemq.xml"/>
 	<!-- 加载注解 -->
 	<context:annotation-config />
 	<!-- 组件扫描 -->
