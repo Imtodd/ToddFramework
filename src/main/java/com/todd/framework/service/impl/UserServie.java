@@ -37,6 +37,7 @@ public class UserServie implements IUserService {
 		return userdao.findByHQL("from User", null);
 	}
 
+	@Cacheable(value="findUserByName",key="#name")
 	public User getUserWithName(String name) {
 		List<User> users = userdao.findByHQL("from User where userName=?", name);
 		if (users.size() != 0) {

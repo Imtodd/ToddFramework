@@ -12,6 +12,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,25 +65,29 @@ public class MainController {
 		}
 	}
 
-	@RequestMapping(value="getRole",method=RequestMethod.GET)
+	@RequestMapping(value = "getRole", method = RequestMethod.GET)
 	@ResponseBody
-	public Set<String> getRoleList(){
+	public Set<String> getRoleList() {
 		return userservice.findRoles("todd");
 	}
-	
-	@RequestMapping(value="getpermission",method=RequestMethod.GET)
+
+	@RequestMapping(value = "getpermission", method = RequestMethod.GET)
 	@ResponseBody
-	public Set<String> getpermission(){
+	public Set<String> getpermission() {
 		return userservice.findPermissions("todd");
 	}
-	
-	@RequestMapping(value="Login",method=RequestMethod.POST)
+
+	@RequestMapping(value = "Login", method = RequestMethod.POST)
 	public String login(User user) {
-		Subject subject = SecurityUtils.getSubject();
-		PasswordHelper.DecryptPassword("65f588c9d74a590b89976a425baf0f75", user);
-		UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), user.getPassword());
-		subject.login(token);
-		if(subject.isAuthenticated()){
+		Subject subject = SecurityUtils.getSubject();//获得shiro的subject对象
+		User temp = userservice.getUserWithName(user.getUserName());//根据用户名获取用户
+		if (temp == null) {//判断是否找到账户
+			throw new UnknownAccountException();
+		}
+		PasswordHelper.DecryptPassword(temp.getSalt(), user);//将盐信息添加到用户对象
+		UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), user.getPassword());//获取token
+		subject.login(token);//登陆操作
+		if (subject.isAuthenticated()) {
 			System.out.println("用户登陆成功");
 		}
 		return "main";
