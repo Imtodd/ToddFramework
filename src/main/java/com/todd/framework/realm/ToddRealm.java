@@ -50,7 +50,7 @@ public class ToddRealm extends AuthorizingRealm {
 		}
 		// 交给 AuthenticatingRealm 使用 CredentialsMatcher 进行密码匹配，如果觉得人家
 		// 的不好可以在此判断或自定义实现
-		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user.getUserName(), // 用户名
+		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user, // 用户名
 				user.getPassword(), // 密码
 				ByteSource.Util.bytes(user.getSalt()), // salt=username+salt
 				getName() // realm name

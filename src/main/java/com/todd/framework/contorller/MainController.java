@@ -2,6 +2,7 @@ package com.todd.framework.contorller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +27,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.todd.framework.activemq.MessageSender.MessageSender;
+import com.todd.framework.po.Role;
 import com.todd.framework.po.User;
+import com.todd.framework.service.IRoleService;
 import com.todd.framework.service.IUserService;
 import com.todd.framework.tools.PasswordHelper;
 
@@ -37,12 +40,15 @@ public class MainController {
 	@Autowired
 	private IUserService userservice;
 	@Autowired
+	private IRoleService roleservice;
+	@Autowired
 	private MessageSender messagesender;
+	
 
 	@RequestMapping(value = "toLogin", method = RequestMethod.GET)
 	public String tologin(Map<String, Object> map) {
 		map.put("userModel", new User());
-		return "Test";
+		return "login";
 	}
 
 	@RequestMapping(value = "toRegist", method = RequestMethod.GET)
@@ -55,6 +61,12 @@ public class MainController {
 	public String regist(Map<String, Object> map, User user) {
 		User temp_user = userservice.getUserWithName(user.getUserName());
 		if (temp_user == null) {
+			List<Role> roles = new ArrayList<Role>();
+			Role role = roleservice.getRoleWithName("guest");
+			if(role!=null){
+				roles.add(role);
+				user.setRoles(roles);
+			}
 			userservice.addUser(user);
 			map.put("code", 101);
 			map.put("msg", "注册成功");
@@ -92,8 +104,9 @@ public class MainController {
 		subject.login(token);// 登陆操作
 		if (subject.isAuthenticated()) {
 			System.out.println("用户登陆成功");
-			messagesender.userLogin(12, user.getUserName());
+			User u = (User) subject.getPrincipal();
+			messagesender.userLogin(u.getId(), user.getUserName());
 		}
-		return "main";
+		return "Test";
 	}
 }
