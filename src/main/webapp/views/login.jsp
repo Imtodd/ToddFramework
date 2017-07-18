@@ -7,18 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>登陆</title>
 </head>
-<script type="text/javascript">
-$('#cc').combobox({
-	url: ...,
-	required: true,
-	valueField: 'id',
-	textField: 'text'
-});</script>
 <body>
-	<div class="easyui-dialog" style="width: 400px; height: 200px"
-		data-options="title:'My Dialog',collapsible:true,iconCls:'icon-ok',onOpen:function(){}">
-		dialog content.</div>
-	<input id="cc" style="width: 200px" />
 	<a href="${ pageContext.request.contextPath }/user/toRegist">注册</a>
 	<div align="center">
 		<x:form action="${ pageContext.request.contextPath }/user/Login"
