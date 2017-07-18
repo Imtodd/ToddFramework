@@ -8,6 +8,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.todd.framework.dao.hibernate.IPermissionDao;
 import com.todd.framework.dao.hibernate.currency.IBaseDao;
 import com.todd.framework.po.Permission;
 import com.todd.framework.service.IPermissionService;
@@ -16,11 +17,12 @@ import com.todd.framework.service.IPermissionService;
 @Transactional
 public class PermissionService implements IPermissionService {
 
-	private IBaseDao<Permission> permissiondao;
+	private IPermissionDao permissiondao;
+	
 
 	@Resource(name = "permissiondao")
 	public void setPermissiondao(IBaseDao<Permission> permissiondao) {
-		this.permissiondao = permissiondao;
+		this.permissiondao = (IPermissionDao) permissiondao;
 	}
 
 	@Cacheable(value = "toddCache")

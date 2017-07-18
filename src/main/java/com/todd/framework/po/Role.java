@@ -20,6 +20,17 @@ public class Role implements Serializable {
 	private boolean available;
 	private List<Permission> permissions;
 
+	public Role() {
+
+	}
+
+	public Role(String role, String description, boolean available, List<Permission> permissions) {
+		this.role = role;
+		this.description = description;
+		this.available = available;
+		this.permissions = permissions;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(columnDefinition = "int COMMENT '角色序号'")
@@ -41,6 +52,7 @@ public class Role implements Serializable {
 	public boolean getAvailable() {
 		return available;
 	}
+
 	@ManyToMany
 	public List<Permission> getPermissions() {
 		return permissions;

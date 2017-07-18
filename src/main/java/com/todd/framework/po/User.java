@@ -19,10 +19,24 @@ public class User implements Serializable {
 
 	private int id;
 	private String userName;
+	private String name;
 	private String password;
 	private String salt;
 	private boolean locked;
 	private List<Role> roles;
+
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public User(String userName, String name, String password, String salt, boolean locked) {
+		super();
+		this.userName = userName;
+		this.name = name;
+		this.password = password;
+		this.salt = salt;
+		this.locked = locked;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,8 +65,8 @@ public class User implements Serializable {
 		return locked;
 	}
 
-	@ManyToMany(fetch=FetchType.LAZY)
-	@JoinColumn(referencedColumnName="id",name="role_id")
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinColumn(referencedColumnName = "id", name = "role_id")
 	public List<Role> getRoles() {
 		return roles;
 	}
@@ -79,6 +93,15 @@ public class User implements Serializable {
 
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+
+	@Column(columnDefinition = "boolean COMMENT '昵称'")
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override

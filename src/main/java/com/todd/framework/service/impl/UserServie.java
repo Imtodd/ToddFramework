@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.todd.framework.dao.hibernate.IUserdao;
 import com.todd.framework.dao.hibernate.currency.IBaseDao;
+import com.todd.framework.dao.hibernate.impl.UserDao;
 import com.todd.framework.dao.mybatis.UserDaoForMyBatis;
 import com.todd.framework.po.Permission;
 import com.todd.framework.po.Role;
@@ -29,7 +30,7 @@ public class UserServie implements IUserService {
 
 	@Resource(name = "userdao")
 	public void setUserdao(IBaseDao<User> userdao) {
-		this.userdao = (IUserdao) userdao;
+		this.userdao =  (IUserdao) userdao;
 	}
 
 	@Cacheable(value = "toddCache")

@@ -13,7 +13,7 @@
 		<!-- junit版本号 -->
 		<junit.version>4.12</junit.version>
 		<!-- hibernate版本号 -->
-		<hibernate.version>5.2.10.Final</hibernate.version>
+		<hibernate.version>5.2.5.Final</hibernate.version>
 		<!-- mybatis版本号 -->
 		<mybatis.version>3.4.4</mybatis.version>
 		<!-- quartz版本号 -->

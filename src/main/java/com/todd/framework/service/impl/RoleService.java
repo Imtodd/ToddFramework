@@ -17,11 +17,11 @@ import com.todd.framework.service.IRoleService;
 @Transactional
 public class RoleService implements IRoleService {
 
-	private IBaseDao<Role> roledao;
+	private IRoleDao roledao;
 
 	@Resource(name = "roledao")
 	public void setRoledao(IBaseDao<Role> roledao) {
-		this.roledao = roledao;
+		this.roledao = (IRoleDao) roledao;
 	}
 
 	@Cacheable(value = "toddCache")

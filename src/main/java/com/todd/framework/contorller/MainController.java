@@ -42,7 +42,7 @@ public class MainController {
 	@RequestMapping(value = "toLogin", method = RequestMethod.GET)
 	public String tologin(Map<String, Object> map) {
 		map.put("userModel", new User());
-		return "login";
+		return "Test";
 	}
 
 	@RequestMapping(value = "toRegist", method = RequestMethod.GET)

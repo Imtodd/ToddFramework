@@ -17,7 +17,18 @@ public class Permission implements Serializable {
 	private int id;
 	private String permission;
 	private String description;
-	private String available;
+	private boolean available;
+
+	public Permission() {
+
+	}
+
+	public Permission(String permission, String description, boolean available) {
+		super();
+		this.permission = permission;
+		this.description = description;
+		this.available = available;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,8 +47,8 @@ public class Permission implements Serializable {
 		return description;
 	}
 
-	@Column(columnDefinition = "varchar(255) COMMENT '是否可用'")
-	public String getAvailable() {
+	@Column(columnDefinition = "boolean COMMENT '是否可用'")
+	public boolean getAvailable() {
 		return available;
 	}
 
@@ -53,7 +64,7 @@ public class Permission implements Serializable {
 		this.description = description;
 	}
 
-	public void setAvailable(String available) {
+	public void setAvailable(boolean available) {
 		this.available = available;
 	}
 
