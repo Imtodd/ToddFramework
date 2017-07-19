@@ -13,8 +13,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
-
-
 public class BaseDao<T> implements IBaseDao<T> {
 
 	@Resource
@@ -65,6 +63,15 @@ public class BaseDao<T> implements IBaseDao<T> {
 
 	public List<T> findByHQL(String hql, Object... params) {
 		Query query = this.getsession().createQuery(hql);
+		for (int i = 0; params != null && i < params.length; i++) {
+			query.setParameter(i, params[i]);
+		}
+		return query.getResultList();
+	}
+
+	public List<T> findByHQLWithPagination(String hql, int rows, int page, Object... params) {
+		int offset = (page-1)*rows;
+		Query query = this.getsession().createQuery(hql).setMaxResults(rows).setFirstResult(offset);
 		for (int i = 0; params != null && i < params.length; i++) {
 			query.setParameter(i, params[i]);
 		}

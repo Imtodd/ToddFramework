@@ -9,7 +9,7 @@
 		diskPersistent="false" diskExpiryThreadIntervalSeconds="120" />
 
 	<cache name="toddCache" maxElementsInMemory="1000" eternal="false"
-		overflowToDisk="true" timeToIdleSeconds="30" timeToLiveSeconds="60" />
+		overflowToDisk="true" timeToIdleSeconds="3" timeToLiveSeconds="3" />
 
 	<cache name="toddCacheWithRole" maxElementsInMemory="1000"
 		eternal="false" overflowToDisk="true" timeToIdleSeconds="30"

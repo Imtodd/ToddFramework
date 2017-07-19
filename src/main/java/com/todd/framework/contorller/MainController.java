@@ -26,10 +26,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.todd.framework.activemq.MessageSender.MessageSender;
 import com.todd.framework.po.Role;
+import com.todd.framework.po.Student;
 import com.todd.framework.po.User;
 import com.todd.framework.service.IRoleService;
+import com.todd.framework.service.IStudentService;
 import com.todd.framework.service.IUserService;
 import com.todd.framework.tools.PasswordHelper;
 
@@ -43,7 +47,8 @@ public class MainController {
 	private IRoleService roleservice;
 	@Autowired
 	private MessageSender messagesender;
-	
+	@Autowired
+	private IStudentService studentsercice;
 
 	@RequestMapping(value = "toLogin", method = RequestMethod.GET)
 	public String tologin(Map<String, Object> map) {
@@ -63,7 +68,7 @@ public class MainController {
 		if (temp_user == null) {
 			List<Role> roles = new ArrayList<Role>();
 			Role role = roleservice.getRoleWithName("guest");
-			if(role!=null){
+			if (role != null) {
 				roles.add(role);
 				user.setRoles(roles);
 			}
@@ -107,6 +112,70 @@ public class MainController {
 			User u = (User) subject.getPrincipal();
 			messagesender.userLogin(u.getId(), user.getUserName());
 		}
+		return "redirect:/user/main";
+	}
+
+	@RequestMapping(value = "main", method = RequestMethod.GET)
+	public String toMain() {
 		return "Test";
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "students")
+	@ResponseBody
+	public JSONObject getStudent(int rows, int page) {
+		JSONObject json = new JSONObject();
+		rows = rows == 0 ? 10 : rows;
+		page = page == 0 ? 1 : page;
+		json.put("rows", studentsercice.getStudentList(rows, page));
+		json.put("total", studentsercice.totleStudent());
+		return json;
+	}
+
+	@RequestMapping(value = "saveStu", method = RequestMethod.POST)
+	@ResponseBody
+	public JSONObject saveStudent(Student stu) {
+		JSONObject json = new JSONObject();
+		try {
+			studentsercice.saveStudent(stu);
+			json.put("success", true);
+			json.put("msg", "保存完成");
+		} catch (Exception e) {
+			json.put("success", false);
+			json.put("msg", "保存失败");
+			e.printStackTrace();
+		}
+		return json;
+	}
+
+	@RequestMapping(value = "updateStu", method = RequestMethod.POST)
+	@ResponseBody
+	public JSONObject updateStudent(Student stu) {
+		JSONObject json = new JSONObject();
+		try {
+			studentsercice.updateStudent(stu);
+			json.put("success", true);
+			json.put("msg", "保存完成");
+		} catch (Exception e) {
+			json.put("success", false);
+			json.put("msg", "保存失败");
+			e.printStackTrace();
+		}
+		return json;
+	}
+
+	@RequestMapping(value = "deleteStu", method = RequestMethod.POST)
+	@ResponseBody
+	public JSONObject deleteStudent(int id) {
+		JSONObject json = new JSONObject();
+		try {
+			studentsercice.deleteStudent(id);
+			json.put("success", true);
+			json.put("msg", "删除完成");
+		} catch (Exception e) {
+			json.put("success", false);
+			json.put("msg", "删除失败");
+			e.printStackTrace();
+		}
+		return json;
 	}
 }

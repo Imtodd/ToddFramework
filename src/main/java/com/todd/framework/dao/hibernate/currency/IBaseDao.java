@@ -41,4 +41,6 @@ public interface IBaseDao<T> {
 	 * @return
 	 */
 	public List<T> findByHQL(String hql, Object... params);
+	
+	public List<T> findByHQLWithPagination(String hql,int rows,int page,Object... params);
 }

@@ -12,10 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.todd.framework.dao.hibernate.IPermissionDao;
 import com.todd.framework.dao.hibernate.IRoleDao;
+import com.todd.framework.dao.hibernate.IStudentDao;
 import com.todd.framework.dao.hibernate.IUserdao;
 import com.todd.framework.dao.hibernate.currency.IBaseDao;
 import com.todd.framework.po.Permission;
 import com.todd.framework.po.Role;
+import com.todd.framework.po.Student;
 import com.todd.framework.po.User;
 
 public class Test extends TToddFramework {
@@ -26,6 +28,8 @@ public class Test extends TToddFramework {
 	private IRoleDao roledao;
 	@Resource(name = "permissiondao")
 	private IPermissionDao permissiondao;
+	@Resource(name="studentdao")
+	private IStudentDao studentdao;
 
 	@org.junit.Test
 	@Transactional
@@ -45,11 +49,26 @@ public class Test extends TToddFramework {
 		adminPermission.add(update);
 		List<Permission> guestPermission = new ArrayList<Permission>();
 		guestPermission.add(select);
-		Role admin = new Role("admin", "管理员", true,adminPermission);
-		Role guest = new Role("guest", "访客", true,guestPermission);
+		Role admin = new Role("admin", "管理员", true, adminPermission);
+		Role guest = new Role("guest", "访客", true, guestPermission);
 		roledao.insert(admin);
 		roledao.insert(guest);
 		System.out.println("初始化完成");
+	}
+
+	@org.junit.Test
+	@Transactional
+	@Rollback(false)
+	public void tests() {
+		Student s1 = new Student("孙立人", 22, "1515135135", "焦土战策");
+		Student s2 = new Student("林彪", 22, "1515135155", "游击野战");
+		Student s3 = new Student("布琼尼", 48, "1515134325", "骑兵作战");
+		Student s4 = new Student("隆美尔", 33, "1515134555", "闪击战");
+		studentdao.insert(s1);
+		studentdao.insert(s2);
+		studentdao.insert(s3);
+		studentdao.insert(s4);
+		System.out.println("数据插入完成");
 	}
 
 	public void setUserdao(IBaseDao<User> userdao) {
@@ -63,5 +82,10 @@ public class Test extends TToddFramework {
 	public void setPermissiondao(IBaseDao<Permission> permissiondao) {
 		this.permissiondao = (IPermissionDao) permissiondao;
 	}
+
+	public void setStudentdao(IBaseDao<Student> studentdao) {
+		this.studentdao = (IStudentDao) studentdao;
+	}
+	
 
 }
